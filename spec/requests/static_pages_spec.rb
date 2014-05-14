@@ -4,15 +4,19 @@ describe "Static pages" do
 
   describe "Home page" do
 
-    it "should have the h1 'Home'" do
+    it "should have the h1 'New App7'" do
       visit '/static_pages/home'
-      page.should have_selector('h1', :text => 'New App7')
+      page.should have_selector('h1', :text => 'Home')
     end
 
-    it "should have the title 'Home'" do
+    it "should have the base title" do
       visit '/static_pages/home'
-      page.should have_selector('title',
-                        :text => "New App7 | Home")
+      page.should have_selector('title', :text => 'New App7')
+    end
+
+    it "should not have a custom page title" do
+      visit '/static_pages/home'
+      page.should_not have_selector('title', :text => '| Home')
     end
   end
 
@@ -23,10 +27,14 @@ describe "Static pages" do
       page.should have_selector('h1', :text => 'Help')
     end
 
-    it "should have the title 'Help'" do
+    it "should have the base title" do
       visit '/static_pages/help'
-      page.should have_selector('title',
-                        :text => "New App7 | Help")
+      page.should have_selector('title', :text => 'New App7')
+    end
+
+    it "should not have the custom page title" do
+      visit '/static_pages/help'
+      page.should_not have_selector('title', :text => "| Help")
     end
   end
 
@@ -34,13 +42,17 @@ describe "Static pages" do
 
     it "should have the h1 'About Us'" do
       visit '/static_pages/about'
-      page.should have_selector('h1', :text => 'About Us')
+      page.should have_selector('h1', :text => 'About')
     end
 
-    it "should have the title 'About Us'" do
+    it "should have the base title" do
       visit '/static_pages/about'
-      page.should have_selector('title',
-                    :text => "New App7 | About Us")
+      page.should have_selector('title', :text => 'New App7')
+    end
+
+    it "should have the custom page title" do
+      visit '/static_pages/about'
+      page.should_not have_selector('title', :text => "| About Us")
     end
   end
 end
