@@ -20,6 +20,25 @@ describe "Static pages" do
     end
   end
 
+  describe "Contact page" do
+
+    it "should have the h1 'New App7'" do
+      visit '/static_pages/contact'
+      page.should have_selector('h1', :text => 'Contact')
+    end
+
+    it "should have the base title" do
+      visit '/static_pages/contact'
+      page.should have_selector('title', :text => 'New App7')
+    end
+
+    it "should not have a custom page title" do
+      visit '/static_pages/contact'
+      page.should_not have_selector('title', :text => '| Contact')
+    end
+  end
+
+
   describe "Help page" do
 
     it "should have the h1 'Help'" do
