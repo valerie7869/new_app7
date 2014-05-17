@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 # from page 423 in book - figure 9.49
-gem 'rails', '3.2.3'
-#gem 'rails', '3.2.16'
+#gem 'rails', '3.2.3'
+gem 'rails', '3.2.15'
 
-gem 'bootstrap-sass', '2.0.0'
-#gem 'bootstrap-sass', '2.1'
+#gem 'bootstrap-sass', '2.0.0'
+gem 'bootstrap-sass', '2.1'
 
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
