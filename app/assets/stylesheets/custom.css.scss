@@ -83,19 +83,19 @@ footer {
 		&:hover {
       		color: $grayDarker;
     	}
-	}
+		}
 	small {
 	    float: left;
-	}
+		}
 	 ul {
 		float: right; 
 		list-style: none; 
 		li {
 			float: left;
 			margin-left: 10px; 
-		}
-	} 
-
+			}
+		} 
+}
 	/* miscellaneous */
 	.debug_dump {
 	  clear: both;
@@ -105,7 +105,7 @@ footer {
 	  @include box_sizing;
 	}
 
-}
+
 
 /* sidebar */
 
