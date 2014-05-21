@@ -11,7 +11,7 @@ describe "Static pages" do
 
   describe "Home page" do
     before { visit root_path }
-    let(:heading)  { 'New App7' }
+    let(:heading)  { 'Gizmo' }
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
@@ -20,7 +20,7 @@ describe "Static pages" do
 
   describe "Help page" do
     before { visit help_path }
-    let(:heading)  { 'New App7' }
+    let(:heading)  { 'Gizmo' }
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
@@ -28,7 +28,7 @@ describe "Static pages" do
 
   describe "About page" do
     before { visit about_path }
-    let(:heading)  { 'New App7' }
+    let(:heading)  { 'Gizmo' }
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
@@ -36,7 +36,7 @@ describe "Static pages" do
 
   describe "Contact page" do
     before { visit contact_path }
-    let(:heading)  { 'New App7' }
+    let(:heading)  { 'Gizmo' }
     let(:page_title) { '' }
 
     it_should_behave_like "all static pages"
