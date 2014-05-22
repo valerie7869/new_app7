@@ -1,0 +1,11 @@
+<li>
+	<%= gravatar_for user, size: 52 %>
+	<%= link_to user.name, user %>
+<!-- see listing 9.44 for below-->
+<!-- allow admin users to delete users -->
+	<% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to "delete", user, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+  <% end %>
+<!-- note: delete link won’t work if the user has JavaScript disabled -->
+</li>

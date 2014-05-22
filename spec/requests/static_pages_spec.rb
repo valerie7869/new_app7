@@ -42,5 +42,4 @@ describe "Static pages" do
     it_should_behave_like "all static pages"
   end
 
-end
-#####===============================================================
+end # of describe "Static pages" do

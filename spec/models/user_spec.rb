@@ -14,9 +14,20 @@ describe User do
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:remember_token) }
+	it { should respond_to(:admin) }
 	it { should respond_to(:authenticate) }
 
 	it { should be_valid }
+	it { should_not be_admin }
+
+	describe "with admin attribute set to 'true' " do 
+		before do 
+			@user.save!
+			@user.toggle!(:admin)  #flips admin attribute from false to true
+		end
+
+		it { should be_admin }  # there must exist a admin? boolean method
+	end
 
 	describe "when name isn't present" do
 		before { @user.name = ""}
@@ -36,8 +47,8 @@ describe User do
         @user.email = invalid_address
         @user.should_not be_valid
      	end
-    end
-	end
+    end # of it "should be invalid"
+	end # of describe "when email format is invalid"
 
 	describe "when email format is valid" do
 		it "should be valid" do
@@ -46,8 +57,8 @@ describe User do
         		@user.email = valid_address
         		@user.should be_valid
 	  			end
-	 	end
-	end
+	 	end # of it "should be valid"
+	end # of describe "when email format is valid" 
 
 	describe "when email address is already taken" do
     before do
@@ -57,7 +68,7 @@ describe User do
     end
 
     it { should_not be_valid }
-	end
+	end # of describe "when email address is already taken"
 
 	describe "when password is not present" do
 		before { @user.password = @user.password_confirmation = "" }
@@ -94,12 +105,12 @@ describe User do
 	  	specify { user_for_invalid_password.should be_false }
 	  end
 
-end
+	end # of describe "return value of authenticate method" 
 
   describe "remember token" do 
   	before { @user.save }
   	its(:remember_token) { should_not be_blank }
   end
 
-end
+end # of describe User
 

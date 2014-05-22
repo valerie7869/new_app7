@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+# Explicitly defining accessible attributes is crucial for good site security. 
+# If we omitted the attr_accessible list in the User model (or foolishly added :admin to the list), 
+#   a malicious user could send a PUT request as follows:    put /users/17?admin=1
+# Because of this danger, it is a good practice to define attr_accessible for every model.
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
 

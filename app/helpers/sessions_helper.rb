@@ -17,9 +17,22 @@ module SessionsHelper
 		@current_user ||= User.find_by_remember_token(cookies[:remember_token])
 	end
 
+	def current_user?(user)   # see 9.15
+		user == current_user
+	end
+	
 	def sign_out
 		self.current_user = nil
 		cookies.delete(:remember_token)
+	end 
+
+	def redirect_back_or(default)  # from 9.17
+		redirect_to(session[:return_to] || default)
+		session.delete(:return_to)
+	end
+
+	def store_location   # from 9.17
+		session[:return_to] = request.url
 	end
 	
 end

@@ -5,6 +5,7 @@ module UsersHelper
   	# see app/views/users/show.html.erb for caller
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
     size = options[:size]
+    # see listing 7.29
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
