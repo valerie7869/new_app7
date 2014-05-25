@@ -1,5 +1,7 @@
 module SessionsHelper
 
+# place here if method is needed for more than 1 controller
+
 	def sign_in(user)
 		cookies.permanent[:remember_token] = user.remember_token
 		self.current_user = user
@@ -20,6 +22,15 @@ module SessionsHelper
 	def current_user?(user)   # see 9.15
 		user == current_user
 	end
+
+	# signed_in_user placed here rather than User controller because
+	# because we also need it for the Microposts controller - 10.27
+	def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
 	
 	def sign_out
 		self.current_user = nil

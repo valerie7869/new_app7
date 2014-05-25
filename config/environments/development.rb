@@ -34,4 +34,7 @@ NewApp7::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # from https://groups.google.com/forum/#!topic/rubyonrails-talk/pe_qcMO4zoc
+  #config.serve_static_assets = false
 end

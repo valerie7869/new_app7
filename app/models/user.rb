@@ -5,6 +5,12 @@ class User < ActiveRecord::Base
 # Because of this danger, it is a good practice to define attr_accessible for every model.
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
+  has_many :microposts, dependent: :destroy
+  # dependent: :destroy arranges for the dependent microposts 
+  # (i.e., the ones belonging to the given user) to be destroyed 
+  # when the user itself is destroyed. This prevents userless microposts 
+  # from being stranded in the database when admins choose to 
+  # remove users from the system.
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -17,6 +23,12 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
   after_validation { self.errors.messages.delete(:password_digest) }
+
+  def feed
+    # this is prelim - see See "Following users" for the full implementation.
+    Micropost.where("user_id = ? ", id)
+    # microposts
+  end
 
   private 
     def create_remember_token

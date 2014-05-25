@@ -1,0 +1,14 @@
+<a href="<%= user_path(current_user) %>">  
+<!-- 	listing 10.32 -->
+  <%= gravatar_for current_user, size: 52 %>
+<!--   see gravatar_for helper in app/helpers/users_helper.rb -->
+</a>
+<h1>
+  <%= current_user.name %>
+</h1>
+<span>
+  <%= link_to "view my profile", current_user %>
+</span>
+<span>
+  <%= pluralize(current_user.microposts.count, "micropost") %>
+</span>

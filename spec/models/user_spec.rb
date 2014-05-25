@@ -16,6 +16,8 @@ describe User do
 	it { should respond_to(:remember_token) }
 	it { should respond_to(:admin) }
 	it { should respond_to(:authenticate) }
+	it { should respond_to(:microposts) }
+	it { should respond_to(:feed) }
 
 	it { should be_valid }
 	it { should_not be_admin }
@@ -111,6 +113,51 @@ describe User do
   	before { @user.save }
   	its(:remember_token) { should_not be_blank }
   end
+
+  describe "micropost associations" do
+  
+	  before { @user.save }
+	  # let! forces the variable to come into existence immediately- 
+	  # see listing 10.13
+	  let!(:older_micropost) do 
+	    FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+	  end
+	  let!(:newer_micropost) do
+	    FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+	  end
+	  
+		describe "status" do  # 10.38
+      let(:unfollowed_post) do
+        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_micropost) }
+      its(:feed) { should include(older_micropost) }
+      its(:feed) { should_not include(unfollowed_post) }
+    end		# of describe "status"
+
+	  it "should have the right microposts in the right order" do
+	    @user.microposts.should == [newer_micropost, older_micropost]
+	  end
+	  # This test also verifies the basic correctness of the has_many 
+	  # association itself, by checking (as indicated in Table 10.11) 
+	  # that user.microposts is an array of microposts
+
+	  it "should destroy associated microposts" do 
+	  	# listing 10.15
+	    microposts = @user.microposts.dup
+	    @user.destroy
+	    microposts.should_not be_empty
+	    microposts.each do |micropost|
+	      Micropost.find_by_id(micropost.id).should be_nil
+	    end
+  	end # of it "should destroy associated microposts"
+
+
+
+	end # of describe "micropost associations"
+
+
 
 end # of describe User
 
