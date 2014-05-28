@@ -12,6 +12,19 @@ class User < ActiveRecord::Base
   # from being stranded in the database when admins choose to 
   # remove users from the system.
 
+  # see 11.4 for below code
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  # see 11.10 for below
+  has_many :followed_users, through: :relationships, source: :followed
+  
+  # see 11.16
+  has_many :reverse_relationships, foreign_key: "followed_id",
+                                    class_name: "Relationship",
+                                    dependent:  :destroy
+  # see 11.16
+  has_many :followers, through: :reverse_relationships, source: :follower
+
+
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
 
@@ -26,14 +39,29 @@ class User < ActiveRecord::Base
 
   def feed
     # this is prelim - see See "Following users" for the full implementation.
-    Micropost.where("user_id = ? ", id)
-    # microposts
+    Micropost.from_users_followed_by(self)
+  end
+
+  # 11.12
+  def following?(other_user)
+    relationships.find_by_followed_id(other_user.id)
+  end
+
+  # 11.12
+  def follow!(other_user)
+    relationships.create!(followed_id: other_user.id)
+  end
+
+  # 11.14
+  def unfollow!(other_user)
+    relationships.find_by_followed_id(other_user.id).destroy
   end
 
   private 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
     end
+
 end
 # == Schema Information
 #

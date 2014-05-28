@@ -20,8 +20,8 @@ describe "Static pages" do
     describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+        FactoryGirl.create(:micropost, user: user, content: "Lorem")
+        FactoryGirl.create(:micropost, user: user, content: "Ipsum")
         sign_in user
         visit root_path
       end
@@ -30,12 +30,24 @@ describe "Static pages" do
         user.feed.each do |item|
           page.should have_selector("li##{item.id}", text: item.content)
           # we assume that that each feed item has a unique CSS id, 
-          #so that above line will generate a match for each item. 
+          # so that above line will generate a match for each item. 
           # (Note that the first # in li##{item.id} is Capybara syntax 
           # for a CSS id, whereas the second # is the beginning of a 
           # Ruby string interpolation #{}.)
         end
       end  # of it "should render the user's feed"
+
+      describe "follower/following counts" do
+        # see 11.19
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit root_path
+        end
+
+        it { should have_link("0 following", href: following_user_path(user)) }
+        it { should have_link("1 followers", href: followers_user_path(user)) }
+      end  # of describe "follower/following counts"  11.19
 
     end # of describe "for signed-in users"
 

@@ -1,13 +1,16 @@
 NewApp7::Application.routes.draw do
-  resources :users
+  resources :users do 
+    member do 
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy] 
   # the interface to the Microposts resource will run 
   # principally through the Users and StaticPages controllers, 
   # so we won’t need actions like new or edit in the Microposts 
   # controller; we only need create and destroy
-
-
+  resources :relationships, only: [:create, :destroy]
 
   root to: 'static_pages#home'
 
