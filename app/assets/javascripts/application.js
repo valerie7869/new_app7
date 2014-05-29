@@ -13,7 +13,6 @@
 
 // see listing 8.25
 
-
 //= require bootstrap
 //= require jquery
 //= require jquery_ujs
