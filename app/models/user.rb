@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 # If we omitted the attr_accessible list in the User model (or foolishly added :admin to the list), 
 #   a malicious user could send a PUT request as follows:    put /users/17?admin=1
 # Because of this danger, it is a good practice to define attr_accessible for every model.
-  attr_accessible :name, :email, :password, :password_confirmation, :temp_password
+  attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
   has_many :microposts, dependent: :destroy
   # dependent: :destroy arranges for the dependent microposts 

@@ -25,7 +25,9 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @user.temp_password = Devise.friendly_token
+  # @user.temp_password = Devise.friendly_token
+  # @user.password = Devise.friendly_token
+  # @user.password_confirmation = @user.password
     respond_to do |format|
       if @user.save
         format.json { render json: @user, status: :created }

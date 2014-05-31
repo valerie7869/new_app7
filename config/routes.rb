@@ -1,7 +1,7 @@
 NewApp7::Application.routes.draw do
 namespace :api do 
     resources :users, :defaults => { :format => 'json' }
-  end
+end
 
   resources :users do 
     member do 
